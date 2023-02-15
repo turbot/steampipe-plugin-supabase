@@ -29,10 +29,14 @@ func clientUncached(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateD
 	if supabaseConfig.AccessToken == nil {
 		return nil, fmt.Errorf("access_token must be configured")
 	}
+	if supabaseConfig.ApiKey == nil {
+		return nil, fmt.Errorf("api_key must be configured")
+	}
 
 	// Start with an empty Supabase config
 	config := api.ClientConfig{
 		AccessToken: *supabaseConfig.AccessToken,
+		ApiKey:      *supabaseConfig.ApiKey,
 	}
 
 	// Create the client
