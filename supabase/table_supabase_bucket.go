@@ -15,8 +15,7 @@ func tableSupabaseBucket(ctx context.Context) *plugin.Table {
 		Name:        "supabase_bucket",
 		Description: "Supabase Bucket",
 		List: &plugin.ListConfig{
-			ParentHydrate: listSupabaseProjects,
-			Hydrate:       listSupabaseBuckets,
+			Hydrate: listSupabaseBuckets,
 		},
 		Get: &plugin.GetConfig{
 			Hydrate:    getSupabaseBucket,
@@ -37,9 +36,6 @@ func tableSupabaseBucket(ctx context.Context) *plugin.Table {
 //// LIST FUNCTION
 
 func listSupabaseBuckets(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	// Get the project data
-	project := h.Item.(api.Project)
-
 	// Create client
 	client, err := getClient(ctx, d)
 	if err != nil {
@@ -47,7 +43,7 @@ func listSupabaseBuckets(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 		return nil, err
 	}
 
-	buckets, err := api.ListBuckets(ctx, client, project.Id)
+	buckets, err := api.ListBuckets(ctx, client)
 	if err != nil {
 		plugin.Logger(ctx).Error("supabase_bucket.listSupabaseBuckets", "query_error", err)
 		return nil, err
@@ -55,7 +51,7 @@ func listSupabaseBuckets(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 
 	for _, bucket := range buckets {
 		// append project details
-		bucket.ProjectId = project.Id
+		bucket.ProjectId = extractProjectIdFromUrl(*client.Url)
 
 		d.StreamListItem(ctx, bucket)
 
@@ -86,14 +82,14 @@ func getSupabaseBucket(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 		return nil, err
 	}
 
-	bucket, err := api.GetBucket(ctx, client, projectID, id)
+	bucket, err := api.GetBucket(ctx, client, id)
 	if err != nil {
 		plugin.Logger(ctx).Error("supabase_bucket.id", "query_error", err)
 		return nil, err
 	}
 
 	// Append project details
-	bucket.ProjectId = projectID
+	bucket.ProjectId = extractProjectIdFromUrl(*client.Url)
 
 	return bucket, nil
 }

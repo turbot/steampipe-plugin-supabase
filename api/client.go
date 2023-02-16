@@ -12,6 +12,7 @@ type Client struct {
 	AccessToken *string
 	ApiKey      *string
 	HTTPClient  *http.Client
+	Url         *string
 }
 
 const (
@@ -25,5 +26,6 @@ func CreateClient(ctx context.Context, config ClientConfig) (*Client, error) {
 		HTTPClient: &http.Client{
 			Timeout: time.Minute,
 		},
+		Url: &config.Url,
 	}, nil
 }

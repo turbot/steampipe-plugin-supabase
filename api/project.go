@@ -42,6 +42,9 @@ func ListProjects(ctx context.Context, client *Client) ([]Project, error) {
 	defer resp.Body.Close()
 
 	var projects []Project
+	if resp.StatusCode >= 300 && resp.StatusCode < 500 {
+		return nil, fmt.Errorf("the server returned a error: %s", resp.Status)
+	}
 	if resp.StatusCode != http.StatusNoContent {
 		if err = json.NewDecoder(resp.Body).Decode(&projects); err != nil {
 			return nil, fmt.Errorf("failed to decode the response: %v", err)

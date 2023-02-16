@@ -41,6 +41,9 @@ func ListFunctions(ctx context.Context, client *Client, projectID string) ([]*Fu
 	defer resp.Body.Close()
 
 	var functions []*Function
+	if resp.StatusCode >= 300 && resp.StatusCode < 500 {
+		return nil, fmt.Errorf("the server returned a error: %s", resp.Status)
+	}
 	if resp.StatusCode != http.StatusNoContent {
 		if err = json.NewDecoder(resp.Body).Decode(&functions); err != nil {
 			return nil, fmt.Errorf("failed to decode the response: %v", err)
@@ -70,6 +73,9 @@ func GetFunction(ctx context.Context, client *Client, projectID string, slug str
 	defer resp.Body.Close()
 
 	var function Function
+	if resp.StatusCode >= 300 && resp.StatusCode < 500 {
+		return nil, fmt.Errorf("the server returned a error: %s", resp.Status)
+	}
 	if resp.StatusCode != http.StatusNoContent {
 		if err = json.NewDecoder(resp.Body).Decode(&function); err != nil {
 			return nil, fmt.Errorf("failed to decode the response: %v", err)

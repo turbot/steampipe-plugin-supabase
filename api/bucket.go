@@ -18,8 +18,8 @@ type Bucket struct {
 	UpdatedAt string `json:"updated_at,omitempty"`
 }
 
-func ListBuckets(ctx context.Context, client *Client, project string) ([]*Bucket, error) {
-	projectUrl := fmt.Sprintf("https://%s.supabase.co", project)
+func ListBuckets(ctx context.Context, client *Client) ([]*Bucket, error) {
+	projectUrl := *client.Url
 	storageEndpoint := "/storage/v1/"
 	apiEndpoint := "/bucket"
 
@@ -31,7 +31,7 @@ func ListBuckets(ctx context.Context, client *Client, project string) ([]*Bucket
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, requestURL, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create requestL: %v", err)
+		return nil, fmt.Errorf("failed to create request: %v", err)
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", *client.ApiKey))
 
@@ -42,6 +42,9 @@ func ListBuckets(ctx context.Context, client *Client, project string) ([]*Bucket
 	defer resp.Body.Close()
 
 	var buckets []*Bucket
+	if resp.StatusCode >= 300 && resp.StatusCode < 500 {
+		return nil, fmt.Errorf("the server returned a error: %s", resp.Status)
+	}
 	if resp.StatusCode != http.StatusNoContent {
 		if err = json.NewDecoder(resp.Body).Decode(&buckets); err != nil {
 			return nil, fmt.Errorf("failed to decode the response: %v", err)
@@ -51,8 +54,8 @@ func ListBuckets(ctx context.Context, client *Client, project string) ([]*Bucket
 	return buckets, nil
 }
 
-func GetBucket(ctx context.Context, client *Client, project string, id string) (*Bucket, error) {
-	projectUrl := fmt.Sprintf("https://%s.supabase.co", project)
+func GetBucket(ctx context.Context, client *Client, id string) (*Bucket, error) {
+	projectUrl := *client.Url
 	storageEndpoint := "/storage/v1/"
 	apiEndpoint := fmt.Sprintf("/bucket/%s", id)
 
@@ -64,7 +67,7 @@ func GetBucket(ctx context.Context, client *Client, project string, id string) (
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, requestURL, nil)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create requestL: %v", err)
+		return nil, fmt.Errorf("failed to create request: %v", err)
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", *client.ApiKey))
 
@@ -75,6 +78,10 @@ func GetBucket(ctx context.Context, client *Client, project string, id string) (
 	defer resp.Body.Close()
 
 	var bucket Bucket
+
+	if resp.StatusCode >= 300 && resp.StatusCode < 500 {
+		return nil, fmt.Errorf("the server returned a error: %s", resp.Status)
+	}
 	if resp.StatusCode != http.StatusNoContent {
 		if err = json.NewDecoder(resp.Body).Decode(&bucket); err != nil {
 			return nil, fmt.Errorf("failed to decode the response: %v", err)
