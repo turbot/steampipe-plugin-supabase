@@ -5,7 +5,6 @@ import (
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-supabase/api"
 )
 
 //// TABLE DEFINITION
@@ -37,13 +36,13 @@ func listSupabaseProjects(ctx context.Context, d *plugin.QueryData, _ *plugin.Hy
 		return nil, err
 	}
 
-	projects, err := api.ListProjects(ctx, client)
+	resp, err := client.GetProjectsWithResponse(ctx)
 	if err != nil {
 		plugin.Logger(ctx).Error("supabase_project.listSupabaseProjects", "query_error", err)
 		return nil, err
 	}
 
-	for _, project := range projects {
+	for _, project := range *resp.JSON200 {
 		d.StreamListItem(ctx, project)
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit

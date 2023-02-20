@@ -3,10 +3,10 @@ package supabase
 import (
 	"context"
 
+	"github.com/supabase/cli/pkg/api"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
-	"github.com/turbot/steampipe-plugin-supabase/api"
 )
 
 //// TABLE DEFINITION
@@ -42,7 +42,7 @@ func tableSupabaseFunction(ctx context.Context) *plugin.Table {
 
 func listSupabaseFunctions(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	// Get the project data
-	project := h.Item.(api.Project)
+	project := h.Item.(api.ProjectResponse)
 
 	// Create client
 	client, err := getClient(ctx, d)
@@ -51,15 +51,15 @@ func listSupabaseFunctions(ctx context.Context, d *plugin.QueryData, h *plugin.H
 		return nil, err
 	}
 
-	functions, err := api.ListFunctions(ctx, client, project.Id)
+	resp, err := client.GetFunctionsWithResponse(ctx, project.Id)
 	if err != nil {
 		plugin.Logger(ctx).Error("supabase_function.listSupabaseFunctions", "query_error", err)
 		return nil, err
 	}
 
-	for _, function := range functions {
-		// append project details
-		function.ProjectId = project.Id
+	for _, function := range *resp.JSON200 {
+		// // append project details
+		// function.ProjectId = project.Id
 
 		d.StreamListItem(ctx, function)
 
@@ -90,14 +90,14 @@ func getSupabaseFunction(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 		return nil, err
 	}
 
-	function, err := api.GetFunction(ctx, client, projectID, slug)
+	resp, err := client.GetFunctionWithResponse(ctx, projectID, slug)
 	if err != nil {
 		plugin.Logger(ctx).Error("supabase_function.getSupabaseFunction", "query_error", err)
 		return nil, err
 	}
 
-	// Append project details
-	function.ProjectId = projectID
+	// // Append project details
+	// function.ProjectId = projectID
 
-	return function, nil
+	return resp.JSON200, nil
 }
