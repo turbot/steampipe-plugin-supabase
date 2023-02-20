@@ -7,18 +7,10 @@ import (
 
 type supabaseConfig struct {
 	AccessToken *string `cty:"access_token"`
-	ApiKey      *string `cty:"api_key"`
-	Url         *string `cty:"url"`
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
 	"access_token": {
-		Type: schema.TypeString,
-	},
-	"api_key": {
-		Type: schema.TypeString,
-	},
-	"url": {
 		Type: schema.TypeString,
 	},
 }
