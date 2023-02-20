@@ -38,6 +38,11 @@ func tableSupabaseFunction(ctx context.Context) *plugin.Table {
 	}
 }
 
+type Function struct {
+	api.FunctionResponse
+	ProjectId string
+}
+
 //// LIST FUNCTION
 
 func listSupabaseFunctions(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
@@ -58,10 +63,7 @@ func listSupabaseFunctions(ctx context.Context, d *plugin.QueryData, h *plugin.H
 	}
 
 	for _, function := range *resp.JSON200 {
-		// // append project details
-		// function.ProjectId = project.Id
-
-		d.StreamListItem(ctx, function)
+		d.StreamListItem(ctx, Function{function, project.Id})
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
 		if d.RowsRemaining(ctx) == 0 {

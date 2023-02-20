@@ -21,8 +21,14 @@ func tableSupabaseSecret(ctx context.Context) *plugin.Table {
 		Columns: []*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "The name of the secret."},
 			{Name: "value", Type: proto.ColumnType_STRING, Description: "The secret value."},
+			{Name: "project_id", Type: proto.ColumnType_STRING, Description: "The ID of the project."},
 		},
 	}
+}
+
+type Secret struct {
+	api.SecretResponse
+	ProjectId string
 }
 
 //// LIST FUNCTION
@@ -45,10 +51,7 @@ func listSupabaseSecrets(ctx context.Context, d *plugin.QueryData, h *plugin.Hyd
 	}
 
 	for _, secret := range *resp.JSON200 {
-		// // append project details
-		// function.ProjectId = project.Id
-
-		d.StreamListItem(ctx, secret)
+		d.StreamListItem(ctx, Secret{secret, project.Id})
 
 		// Context can be cancelled due to manual cancellation or the limit has been hit
 		if d.RowsRemaining(ctx) == 0 {
