@@ -30,9 +30,9 @@ func tableSupabaseFunction(ctx context.Context) *plugin.Table {
 			{Name: "version", Type: proto.ColumnType_STRING, Description: "The current version of the function."},
 			{Name: "status", Type: proto.ColumnType_STRING, Description: "The current status of the function."},
 			{Name: "created_at", Type: proto.ColumnType_TIMESTAMP, Description: "The time when the function was created.", Transform: transform.FromField("CreatedAt").Transform(transform.UnixMsToTimestamp)},
-			{Name: "import_map", Type: proto.ColumnType_BOOL, Description: ""},
+			{Name: "import_map", Type: proto.ColumnType_BOOL, Description: "If true, Supabase will automatically generate an import_map file based on the modules used within the function. It indicates whether or not Supabase should use an import_map file to load JavaScript modules within the function."},
 			{Name: "updated_at", Type: proto.ColumnType_TIMESTAMP, Description: "The time when the function was last modified.", Transform: transform.FromField("UpdatedAt").Transform(transform.UnixMsToTimestamp)},
-			{Name: "verify_jwt", Type: proto.ColumnType_BOOL, Description: ""},
+			{Name: "verify_jwt", Type: proto.ColumnType_BOOL, Description: "If true, it allows users to verify the authenticity of JSON Web Tokens (JWTs) issued by Supabase Authentication."},
 			{Name: "project_id", Type: proto.ColumnType_STRING, Description: "The ID of the project where the function is located."},
 		},
 	}

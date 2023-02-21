@@ -18,19 +18,6 @@ from
   supabase_project;
 ```
 
-### Get the count of buckets per project
-
-```sql
-select
-  p.name as project,
-  count(b.id) as bucket_count
-from
-  supabase_bucket as b
-  join supabase_project as p on b.project_id = p.id
-group by
-  p.name;
-```
-
 ### Get the count of projects per region
 
 ```sql
@@ -41,4 +28,15 @@ from
   supabase_project
 group by
   region;
+```
+
+### Get the list of banned IPs
+
+```sql
+select
+  b.address as ip,
+  p.name as project
+from
+  supabase_project_network_bans as b
+  join supabase_project as p on b.project_id = p.id;
 ```

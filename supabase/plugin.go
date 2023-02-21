@@ -20,7 +20,6 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			Schema:      ConfigSchema,
 		},
 		TableMap: map[string]*plugin.Table{
-			// "supabase_bucket":   tableSupabaseBucket(ctx),
 			"supabase_function":                     tableSupabaseFunction(ctx),
 			"supabase_organization":                 tableSupabaseOrganization(ctx),
 			"supabase_project":                      tableSupabaseProject(ctx),

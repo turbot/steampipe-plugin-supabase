@@ -3,13 +3,17 @@ package supabase
 import (
 	"context"
 	"fmt"
-	"net"
 	"net/http"
+	"os"
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
 	supabase "github.com/supabase/cli/pkg/api"
+)
+
+const (
+	BaseURL = "https://api.supabase.com"
 )
 
 // getClient:: returns Supabase client after authentication
@@ -31,8 +35,19 @@ func clientUncached(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateD
 	// Get the config
 	supabaseConfig := GetConfig(d.Connection)
 
+	/*
+		Returns credentials by precedence.
+		Precedence of credentials:
+		  - Credentials set in config
+		  - Value set using SUPABASE_ACCESS_TOKEN env var
+	*/
+	accessToken := os.Getenv("SUPABASE_ACCESS_TOKEN")
+	if supabaseConfig.AccessToken != nil {
+		accessToken = *supabaseConfig.AccessToken
+	}
+
 	// No creds
-	if supabaseConfig.AccessToken == nil {
+	if accessToken == "" {
 		return nil, fmt.Errorf("access_token must be configured")
 	}
 
@@ -41,22 +56,8 @@ func clientUncached(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateD
 		return nil, err
 	}
 
-	if t, ok := http.DefaultTransport.(*http.Transport); ok {
-		dialContext := t.DialContext
-		t.DialContext = func(ctx context.Context, network, address string) (net.Conn, error) {
-			conn, err := dialContext(ctx, network, address)
-			// Workaround when pure Go DNS resolver fails https://github.com/golang/go/issues/12524
-			if err, ok := err.(*net.OpError); ok && err.Op == "dial" {
-				if ip := fallbackLookupIP(ctx, address); ip != "" {
-					return dialContext(ctx, network, ip)
-				}
-			}
-			return conn, err
-		}
-	}
-
 	apiClient, err := supabase.NewClientWithResponses(
-		"https://api.supabase.com",
+		BaseURL,
 		supabase.WithRequestEditorFn(provider.Intercept),
 		supabase.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
 			req.Header.Set("User-Agent", "Steampipe")
@@ -64,7 +65,7 @@ func clientUncached(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateD
 		}),
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error creating client: %v", err)
 	}
 
 	return apiClient, nil
