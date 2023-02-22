@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/deepmap/oapi-codegen v1.12.4
 	github.com/supabase/cli v1.38.6
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.2.0-rc.6
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.2.0-rc.8
 )
 
 require (
@@ -35,7 +35,6 @@ require (
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gertd/go-pluralize v0.2.1 // indirect
-	github.com/gertd/wild v0.0.1 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-logr/logr v1.2.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
