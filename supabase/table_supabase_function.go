@@ -98,8 +98,5 @@ func getSupabaseFunction(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 		return nil, err
 	}
 
-	// // Append project details
-	// function.ProjectId = projectID
-
 	return resp.JSON200, nil
 }

@@ -14,3 +14,41 @@ select
 from
   supabase_project_network_restrictions;
 ```
+
+### List projects with no access to network restrictions
+
+```sql
+select
+  project_id,
+  entitlement,
+  status
+from
+  supabase_project_network_restrictions
+where
+  entitlement = 'disallowed';
+```
+
+### List projects where network restrictions configuration is not applied
+
+```sql
+select
+  p.name as project,
+  r.status
+from
+  supabase_project_network_restrictions as r
+  join supabase_project as p on r.project_id = p.id
+where
+  r.status != 'applied';
+```
+
+### Get the list of allowed CIDRs
+
+```sql
+select
+  ip as allowed_cidr,
+  project_id,
+  status
+from
+  supabase_project_network_restrictions,
+  jsonb_array_elements_text(config -> 'dbAllowedCidrs') as ip;
+```

@@ -19,9 +19,9 @@ func tableSupabaseProjectNetworkRestrictions(ctx context.Context) *plugin.Table 
 			Hydrate:       listSupabaseProjectNetworkRestrictions,
 		},
 		Columns: []*plugin.Column{
-			{Name: "entitlement", Type: proto.ColumnType_IPADDR, Description: ""},
-			{Name: "status", Type: proto.ColumnType_IPADDR, Description: ""},
-			{Name: "config", Type: proto.ColumnType_JSON, Description: ""},
+			{Name: "entitlement", Type: proto.ColumnType_STRING, Description: "Indicates whether the Supabase project has access to network restrictions or not. Possible values are: 'allowed', 'disallowed'."},
+			{Name: "status", Type: proto.ColumnType_STRING, Description: "The current status of the network restrictions for the Supabase project. Possible values are: 'stored', 'applied'."},
+			{Name: "config", Type: proto.ColumnType_JSON, Description: "Specifies the current network restrictions configuration for the Supabase project."},
 			{Name: "project_id", Type: proto.ColumnType_STRING, Description: "The ID of the project."},
 		},
 	}
@@ -52,7 +52,7 @@ func listSupabaseProjectNetworkRestrictions(ctx context.Context, d *plugin.Query
 	}
 	if resp.JSON200 != nil {
 		d.StreamListItem(ctx, NetworkRestrictions{*resp, project.Id})
-		
+
 	}
 
 	return nil, nil
