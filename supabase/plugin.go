@@ -23,6 +23,7 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			"supabase_function":                     tableSupabaseFunction(ctx),
 			"supabase_organization":                 tableSupabaseOrganization(ctx),
 			"supabase_project":                      tableSupabaseProject(ctx),
+			"supabase_project_custom_hostname":      tableSupabaseProjectCustomHostname(ctx),
 			"supabase_project_network_bans":         tableSupabaseProjectNetworkBans(ctx),
 			"supabase_project_network_restrictions": tableSupabaseProjectNetworkRestrictions(ctx),
 			"supabase_secret":                       tableSupabaseSecret(ctx),
