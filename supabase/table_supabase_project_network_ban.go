@@ -12,7 +12,7 @@ import (
 
 func tableSupabaseProjectNetworkBans(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "supabase_project_network_bans",
+		Name:        "supabase_project_network_ban",
 		Description: "Supabase Project Network Bans",
 		List: &plugin.ListConfig{
 			ParentHydrate: listSupabaseProjects,
@@ -39,13 +39,13 @@ func listSupabaseProjectNetworkBans(ctx context.Context, d *plugin.QueryData, h 
 	// Create client
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("supabase_project_network_bans.listSupabaseProjectNetworkBans", "connection_error", err)
+		plugin.Logger(ctx).Error("supabase_project_network_ban.listSupabaseProjectNetworkBans", "connection_error", err)
 		return nil, err
 	}
 
 	resp, err := client.GetNetworkBansWithResponse(ctx, project.Id)
 	if err != nil {
-		plugin.Logger(ctx).Error("supabase_project_network_bans.listSupabaseProjectNetworkBans", "query_error", err)
+		plugin.Logger(ctx).Error("supabase_project_network_ban.listSupabaseProjectNetworkBans", "query_error", err)
 		return nil, err
 	}
 

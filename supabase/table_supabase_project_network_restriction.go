@@ -12,7 +12,7 @@ import (
 
 func tableSupabaseProjectNetworkRestrictions(ctx context.Context) *plugin.Table {
 	return &plugin.Table{
-		Name:        "supabase_project_network_restrictions",
+		Name:        "supabase_project_network_restriction",
 		Description: "Supabase Project Network Restrictions",
 		List: &plugin.ListConfig{
 			ParentHydrate: listSupabaseProjects,
@@ -41,13 +41,13 @@ func listSupabaseProjectNetworkRestrictions(ctx context.Context, d *plugin.Query
 	// Create client
 	client, err := getClient(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("supabase_project_network_restrictions.listSupabaseProjectNetworkRestrictions", "connection_error", err)
+		plugin.Logger(ctx).Error("supabase_project_network_restriction.listSupabaseProjectNetworkRestrictions", "connection_error", err)
 		return nil, err
 	}
 
 	resp, err := client.GetNetworkRestrictionsWithResponse(ctx, project.Id)
 	if err != nil {
-		plugin.Logger(ctx).Error("supabase_project_network_restrictions.listSupabaseProjectNetworkRestrictions", "query_error", err)
+		plugin.Logger(ctx).Error("supabase_project_network_restriction.listSupabaseProjectNetworkRestrictions", "query_error", err)
 		return nil, err
 	}
 	if resp.JSON200 != nil {
