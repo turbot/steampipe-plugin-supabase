@@ -32,7 +32,7 @@ where
   status = 'THROTTLED';
 ```
 
-### List functions with verify JWT enabled
+### List functions with JWT verification enabled
 
 ```sql
 select

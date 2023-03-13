@@ -11,15 +11,43 @@ Use SQL to query projects, functions, network restrictions, and more from your S
 
 ## Quick start
 
-Install the plugin with [Steampipe](https://steampipe.io):
+### Install
 
-```shell
+Download and install the latest Supabase plugin:
+
+```bash
 steampipe plugin install supabase
 ```
 
 Configure your [credentials](https://hub.steampipe.io/plugins/turbot/supabase#credentials) and [config file](https://hub.steampipe.io/plugins/turbot/supabase#configuration).
 
-Run a query:
+Configure your account details in `~/.steampipe/config/supabase.spc`:
+
+```hcl
+connection "supabase" {
+  plugin = "supabase"
+
+  # The Supabase personal token.
+  # All API requests require a Supabase Personal token to be included in the Authorization header.
+  # To generate or manage your API token, visit your account page: https://app.supabase.com/account/tokens
+  # This can also be set via the `SUPABASE_ACCESS_TOKEN` environment variable.
+  # access_token = "sbp_bdd0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4f23"
+}
+```
+
+Or through environment variables:
+
+```sh
+export SUPABASE_ACCESS_TOKEN=sbp_bdd0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4f23
+```
+
+Run steampipe:
+
+```shell
+steampipe query
+```
+
+List projects in your Supabase organization:
 
 ```sql
 select
@@ -29,6 +57,15 @@ select
   organization_id
 from
   supabase_project;
+```
+
+```
++-----------+------------+---------------------------+----------------------+
+| name      | region     | created_at                | organization_id      |
++-----------+------------+---------------------------+----------------------+
+| Steampunk | us-east-1  | 2023-02-15T20:19:50+05:30 | zuluktedwinzftfztsub |
+| Steampipe | ap-south-1 | 2023-02-13T21:29:46+05:30 | zuluktedwinzftfztsub |
++-----------+------------+---------------------------+----------------------+
 ```
 
 ## Developing

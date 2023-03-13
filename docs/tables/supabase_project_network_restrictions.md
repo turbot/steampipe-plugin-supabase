@@ -28,7 +28,7 @@ where
   entitlement = 'disallowed';
 ```
 
-### List projects where network restrictions configuration is not applied
+### List projects where network restriction configuration is not applied
 
 ```sql
 select

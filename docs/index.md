@@ -12,13 +12,13 @@ og_image: "/images/plugins/turbot/supabase-social-graphic.png"
 
 # Supabase + Steampipe
 
-is an open-source alternative to Firebase, which is a mobile and web application development platform. Supabase provides a suite of tools and services that help developers build applications with backend functionalities.
+Supabase is an open-source alternative to Firebase, which is a mobile and web application development platform. Supabase provides a suite of tools and services that help developers build applications with backend functionalities.
 
 [Supabase](https://supabase.com) is an open-source alternative to Firebase, provides a suite of tools and services that help developers build applications with backend functionalities.
 
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
-List Supabase project details:
+List projects in your Supabase organization:
 
 ```sql
 select
@@ -43,7 +43,7 @@ from
 
 - **[Table definitions & examples →](/plugins/turbot/supabase/tables)**
 
-## Get started
+## Quick start
 
 ### Install
 
@@ -78,9 +78,7 @@ connection "supabase" {
 }
 ```
 
-### Credentials from Environment Variables
-
-The Supabase plugin will use the standard Supabase environment variables to obtain credentials **only if other argument (`access_token`) is not specified** in the connection:
+Alternatively, you can also use the standard Supabase environment variables to obtain credentials only if other argument (`access_token`) is not specified in the connection:
 
 ```sh
 export SUPABASE_ACCESS_TOKEN=sbp_bdd0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4f23
