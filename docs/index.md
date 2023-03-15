@@ -12,8 +12,6 @@ og_image: "/images/plugins/turbot/supabase-social-graphic.png"
 
 # Supabase + Steampipe
 
-Supabase is an open-source alternative to Firebase, which is a mobile and web application development platform. Supabase provides a suite of tools and services that help developers build applications with backend functionalities.
-
 [Supabase](https://supabase.com) is an open-source alternative to Firebase, provides a suite of tools and services that help developers build applications with backend functionalities.
 
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
