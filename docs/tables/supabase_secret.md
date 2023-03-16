@@ -16,3 +16,16 @@ select
 from
   supabase_secret;
 ```
+
+### List all secrets of a specific project
+
+```sql
+select
+  project_id,
+  name,
+  value
+from
+  supabase_secret
+where
+  project_id = 'pljlooizchwsteampipe';
+```
