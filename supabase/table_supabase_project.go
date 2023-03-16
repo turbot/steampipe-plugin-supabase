@@ -3,8 +3,10 @@ package supabase
 import (
 	"context"
 
+	"github.com/supabase/cli/pkg/api"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 //// TABLE DEFINITION
@@ -23,6 +25,7 @@ func tableSupabaseProject(ctx context.Context) *plugin.Table {
 			{Name: "created_at", Type: proto.ColumnType_TIMESTAMP, Description: "The time when the project was created."},
 			{Name: "region", Type: proto.ColumnType_STRING, Description: "The project region."},
 			{Name: "database", Type: proto.ColumnType_JSON, Description: "The database information."},
+			{Name: "api_settings", Type: proto.ColumnType_JSON, Description: "The database information.", Hydrate: getProjectAPISettings, Transform: transform.FromValue()},
 		},
 	}
 }
@@ -52,4 +55,24 @@ func listSupabaseProjects(ctx context.Context, d *plugin.QueryData, _ *plugin.Hy
 	}
 
 	return nil, nil
+}
+
+//// HYDRATE FUNCTIONS
+
+func getProjectAPISettings(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	projectId := h.Item.(api.ProjectResponse).Id
+
+	client, err := getClient(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("supabase_project.getProjectAPISettings", "connection_error", err)
+		return nil, err
+	}
+
+	resp, err := client.GetPostgRESTConfigWithResponse(ctx, projectId)
+	if err != nil {
+		plugin.Logger(ctx).Error("supabase_project.getProjectAPISettings", "query_error", err)
+		return nil, err
+	}
+
+	return resp.JSON200, nil
 }

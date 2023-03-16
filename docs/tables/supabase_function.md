@@ -45,3 +45,33 @@ from
 where
   verify_jwt;
 ```
+
+### List functions not updated in last 30 days
+
+```sql
+select
+  name,
+  slug,
+  status,
+  version,
+  project_id
+from
+  supabase_function
+where
+  updated_at < (current_date - interval '30 days');
+```
+
+### Get a specific function
+
+```sql
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function
+where
+  project_id = 'pljlooizchwsteampipe'
+  and slug = 'test-function';
+```

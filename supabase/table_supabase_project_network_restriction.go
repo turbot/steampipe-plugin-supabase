@@ -28,7 +28,7 @@ func tableSupabaseProjectNetworkRestrictions(ctx context.Context) *plugin.Table 
 }
 
 type NetworkRestrictions struct {
-	api.GetNetworkRestrictionsResponse
+	api.NetworkRestrictionsResponse
 	ProjectId string
 }
 
@@ -51,7 +51,7 @@ func listSupabaseProjectNetworkRestrictions(ctx context.Context, d *plugin.Query
 		return nil, err
 	}
 	if resp.JSON200 != nil {
-		d.StreamListItem(ctx, NetworkRestrictions{*resp, project.Id})
+		d.StreamListItem(ctx, NetworkRestrictions{*resp.JSON200, project.Id})
 
 	}
 
