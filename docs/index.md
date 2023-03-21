@@ -55,7 +55,7 @@ steampipe plugin install supabase
 
 | Item        | Description                                                                                                                                                                          |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Credentials | All API requests require a Supabase [Access Token](https://supabase.com/docs/reference/api/introduction#authentication) to be included in the `Authorization` header.                                          |
+| Credentials | All API requests require a Supabase [Access Token](https://supabase.com/docs/reference/api/introduction#authentication) to be included in the `Authorization` header.                |
 | Permissions | API tokens carry the same privileges as your user account, and if the user permissions change, the API token permissions also change.                                                |
 | Radius      | Each connection represents a single Supabase Installation.                                                                                                                           |
 | Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/supabase.spc`)<br />2. Credentials specified in environment variables, e.g., `SUPABASE_ACCESS_TOKEN`. |
