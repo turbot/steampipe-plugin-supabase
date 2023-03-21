@@ -31,14 +31,14 @@ connection "supabase" {
   # All API requests require a Supabase Personal token to be included in the Authorization header.
   # To generate or manage your API token, visit your account page: https://app.supabase.com/account/tokens
   # This can also be set via the `SUPABASE_ACCESS_TOKEN` environment variable.
-  # access_token = "sbp_bdd0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4f23"
+  # access_token = "sbp_123a45b6c78d901e2345f6steampipe45i432101"
 }
 ```
 
 Or through environment variables:
 
 ```sh
-export SUPABASE_ACCESS_TOKEN=sbp_bdd0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4f23
+export SUPABASE_ACCESS_TOKEN=sbp_123a45b6c78d901e2345f6steampipe45i432101
 ```
 
 Run steampipe:

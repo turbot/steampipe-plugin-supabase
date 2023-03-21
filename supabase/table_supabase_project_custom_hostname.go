@@ -27,7 +27,7 @@ func tableSupabaseProjectCustomHostname(ctx context.Context) *plugin.Table {
 	}
 }
 
-type CustomHostnamae struct {
+type CustomHostname struct {
 	api.UpdateCustomHostnameResponse
 	ProjectId string
 }
@@ -51,11 +51,11 @@ func listSupabaseProjectCustomHostname(ctx context.Context, d *plugin.QueryData,
 		return nil, err
 	}
 
-	// Return nil, if no custom hostname configured
+	// Return nil, if no custom hostname is configured
 	if resp.JSON200 == nil {
 		return nil, nil
 	}
-	d.StreamListItem(ctx, CustomHostnamae{*resp.JSON200, project.Id})
+	d.StreamListItem(ctx, CustomHostname{*resp.JSON200, project.Id})
 
 	return nil, nil
 }

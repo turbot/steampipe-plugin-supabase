@@ -55,7 +55,7 @@ steampipe plugin install supabase
 
 | Item        | Description                                                                                                                                                                          |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Credentials | All API requests require a Supabase [Personal token](https://app.supabase.com/account/tokens) to be included in the `Authorization` header.                                          |
+| Credentials | All API requests require a Supabase [Access Token](https://supabase.com/docs/reference/api/introduction#authentication) to be included in the `Authorization` header.                                          |
 | Permissions | API tokens carry the same privileges as your user account, and if the user permissions change, the API token permissions also change.                                                |
 | Radius      | Each connection represents a single Supabase Installation.                                                                                                                           |
 | Resolution  | 1. Credentials explicitly set in a steampipe config file (`~/.steampipe/config/supabase.spc`)<br />2. Credentials specified in environment variables, e.g., `SUPABASE_ACCESS_TOKEN`. |
@@ -72,14 +72,14 @@ connection "supabase" {
   # All API requests require a Supabase Personal token to be included in the Authorization header.
   # To generate or manage your API token, visit your account page: https://app.supabase.com/account/tokens
   # This can also be set via the `SUPABASE_ACCESS_TOKEN` environment variable.
-  # access_token = "sbp_bdd0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4f23"
+  # access_token = "sbp_123a45b6c78d901e2345f6steampipe45i432101"
 }
 ```
 
 Alternatively, you can also use the standard Supabase environment variables to obtain credentials only if other argument (`access_token`) is not specified in the connection:
 
 ```sh
-export SUPABASE_ACCESS_TOKEN=sbp_bdd0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx4f23
+export SUPABASE_ACCESS_TOKEN=sbp_123a45b6c78d901e2345f6steampipe45i432101
 ```
 
 ## Get involved

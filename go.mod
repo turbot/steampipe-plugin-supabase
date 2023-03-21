@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/deepmap/oapi-codegen v1.12.4
-	github.com/supabase/cli v1.42.7
+	github.com/supabase/cli v1.43.0
 	github.com/turbot/steampipe-plugin-sdk/v5 v5.3.0
 )
 
