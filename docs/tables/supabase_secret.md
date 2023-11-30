@@ -1,12 +1,20 @@
-# Table: supabase_secret
+---
+title: "Steampipe Table: supabase_secret - Query Supabase Secrets using SQL"
+description: "Allows users to query Supabase Secrets, particularly the secret key and the status of the secret. This provides insights into the security and access management within a Supabase project."
+---
 
-In Supabase, a secret is a piece of confidential information that is used for authentication, authorization, or other security-related purposes. Secrets can include things like API keys, database passwords, and other sensitive information that should not be publicly exposed.
+# Table: supabase_secret - Query Supabase Secrets using SQL
 
-Supabase allows users to securely store your secrets using environment variables, which can be accessed in your code using the Supabase library or other tools. This helps to protect your application and data from unauthorized access, and is an important part of building secure and reliable applications.
+Supabase Secrets are essentially the keys used to access and manage various aspects of a Supabase project. These keys are used to authenticate users, manage roles, and perform various operations within the project. Understanding and managing these secrets is crucial for maintaining security and access control within the Supabase environment.
+
+## Table Usage Guide
+
+The `supabase_secret` table provides insights into the secrets within a Supabase project. As a security engineer or a project manager, you can explore secret-specific details through this table, including the secret key and its status. Use it to manage and monitor the security and access control of your Supabase project, ensuring the right access is provided to the right users and roles.
 
 ## Examples
 
 ### Basic info
+Explore which project secrets are being used in your Supabase setup. This can help you manage and track the use of sensitive information across your projects.
 
 ```sql
 select
@@ -18,6 +26,7 @@ from
 ```
 
 ### List all secrets of a specific project
+Discover the segments that contain all hidden or confidential information for a specific project. This can be useful in assessing data security and ensuring sensitive data is adequately protected.
 
 ```sql
 select
