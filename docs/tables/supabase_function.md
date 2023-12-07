@@ -16,7 +16,17 @@ The `supabase_function` table provides insights into user-defined functions with
 ### Basic info
 Explore the status and version of various functions within your Supabase environment. This can be useful to keep track of function updates and monitor their operational status.
 
-```sql
+```sql+postgres
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function;
+```
+
+```sql+sqlite
 select
   name,
   slug,
@@ -29,7 +39,19 @@ from
 ### List throttled functions
 Identify instances where certain functions have been throttled or limited in their operations. This can help in diagnosing performance issues and maintaining optimal functionality.
 
-```sql
+```sql+postgres
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function
+where
+  status = 'THROTTLED';
+```
+
+```sql+sqlite
 select
   name,
   slug,
@@ -44,7 +66,19 @@ where
 ### List functions with JWT verification enabled
 Determine the areas in which JWT verification is enabled for various functions. This is useful for ensuring security measures are in place across your functions.
 
-```sql
+```sql+postgres
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function
+where
+  verify_jwt;
+```
+
+```sql+sqlite
 select
   name,
   slug,
@@ -59,7 +93,7 @@ where
 ### List functions not updated in last 30 days
 Discover the functions that have not been updated in the past 30 days. This is useful to identify areas that may require attention or updates to ensure optimal performance and security.
 
-```sql
+```sql+postgres
 select
   name,
   slug,
@@ -72,10 +106,36 @@ where
   updated_at < (current_date - interval '30 days');
 ```
 
+```sql+sqlite
+select
+  name,
+  slug,
+  status,
+  version,
+  project_id
+from
+  supabase_function
+where
+  updated_at < date('now','-30 day');
+```
+
 ### Get a specific function
 Explore the status and version of a specific function within a given project. This can help in tracking the function's progress and managing updates effectively.
 
-```sql
+```sql+postgres
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function
+where
+  project_id = 'pljlooizchwsteampipe'
+  and slug = 'test-function';
+```
+
+```sql+sqlite
 select
   name,
   slug,

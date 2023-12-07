@@ -16,7 +16,16 @@ The `supabase_project_network_restriction` table provides insights into network 
 ### Basic info
 Explore which projects have network restrictions by assessing their entitlement status. This can help in understanding the level of access control applied to the projects.
 
-```sql
+```sql+postgres
+select
+  project_id,
+  entitlement,
+  status
+from
+  supabase_project_network_restriction;
+```
+
+```sql+sqlite
 select
   project_id,
   entitlement,
@@ -28,7 +37,18 @@ from
 ### List projects with no access to network restrictions
 Explore which projects have been denied network access, providing valuable insights into potential security measures or restrictions in place. This could be particularly useful for assessing compliance with internal policies or identifying areas for improvement in network security.
 
-```sql
+```sql+postgres
+select
+  project_id,
+  entitlement,
+  status
+from
+  supabase_project_network_restriction
+where
+  entitlement = 'disallowed';
+```
+
+```sql+sqlite
 select
   project_id,
   entitlement,
@@ -42,7 +62,18 @@ where
 ### List projects where network restriction configuration is not applied
 Analyze the settings to understand which projects have not applied network restriction configurations, helping to identify potential security vulnerabilities.
 
-```sql
+```sql+postgres
+select
+  p.name as project,
+  r.status
+from
+  supabase_project_network_restriction as r
+  join supabase_project as p on r.project_id = p.id
+where
+  r.status != 'applied';
+```
+
+```sql+sqlite
 select
   p.name as project,
   r.status
@@ -56,7 +87,7 @@ where
 ### Get the list of allowed CIDRs
 Uncover the details of permitted network addresses within your project, helping you maintain security by understanding which IP ranges have access. This can be particularly useful in identifying any unusual or unexpected network permissions that could potentially compromise your project's security.
 
-```sql
+```sql+postgres
 select
   ip as allowed_cidr,
   project_id,
@@ -64,4 +95,14 @@ select
 from
   supabase_project_network_restriction,
   jsonb_array_elements_text(config -> 'dbAllowedCidrs') as ip;
+```
+
+```sql+sqlite
+select
+  ip.value as allowed_cidr,
+  project_id,
+  status
+from
+  supabase_project_network_restriction,
+  json_each(supabase_project_network_restriction.config, '$.dbAllowedCidrs') as ip;
 ```

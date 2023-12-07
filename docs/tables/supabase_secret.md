@@ -16,7 +16,16 @@ The `supabase_secret` table provides insights into the secrets within a Supabase
 ### Basic info
 Explore which project secrets are being used in your Supabase setup. This can help you manage and track the use of sensitive information across your projects.
 
-```sql
+```sql+postgres
+select
+  project_id,
+  name,
+  value
+from
+  supabase_secret;
+```
+
+```sql+sqlite
 select
   project_id,
   name,
@@ -28,7 +37,18 @@ from
 ### List all secrets of a specific project
 Discover the segments that contain all hidden or confidential information for a specific project. This can be useful in assessing data security and ensuring sensitive data is adequately protected.
 
-```sql
+```sql+postgres
+select
+  project_id,
+  name,
+  value
+from
+  supabase_secret
+where
+  project_id = 'pljlooizchwsteampipe';
+```
+
+```sql+sqlite
 select
   project_id,
   name,
