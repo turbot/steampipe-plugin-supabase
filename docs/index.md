@@ -8,6 +8,7 @@ short_name: "supabase"
 description: "Steampipe plugin to query projects, functions, network restrictions, and more from your Supabase organization."
 og_description: "Query Supabase with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/supabase-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Supabase + Steampipe
