@@ -83,7 +83,4 @@ Alternatively, you can also use the standard Supabase environment variables to o
 export SUPABASE_ACCESS_TOKEN=sbp_123a45b6c78d901e2345f6steampipe45i432101
 ```
 
-## Get involved
 
-- Open source: https://github.com/turbot/steampipe-plugin-supabase
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
