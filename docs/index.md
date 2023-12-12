@@ -8,13 +8,14 @@ short_name: "supabase"
 description: "Steampipe plugin to query projects, functions, network restrictions, and more from your Supabase organization."
 og_description: "Query Supabase with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/supabase-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Supabase + Steampipe
 
 [Supabase](https://supabase.com) is an open-source alternative to Firebase, provides a suite of tools and services that help developers build applications with backend functionalities.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 List projects in your Supabase organization:
 
@@ -82,7 +83,4 @@ Alternatively, you can also use the standard Supabase environment variables to o
 export SUPABASE_ACCESS_TOKEN=sbp_123a45b6c78d901e2345f6steampipe45i432101
 ```
 
-## Get involved
 
-- Open source: https://github.com/turbot/steampipe-plugin-supabase
-- Community: [Join #steampipe on Slack →](https://turbot.com/community/join)

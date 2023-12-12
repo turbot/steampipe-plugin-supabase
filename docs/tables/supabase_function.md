@@ -1,14 +1,32 @@
-# Table: supabase_function
+---
+title: "Steampipe Table: supabase_function - Query Supabase Functions using SQL"
+description: "Allows users to query Supabase Functions, specifically to retrieve information about user-defined functions in a Supabase database."
+---
 
-A Supabase function allows users to write and deploy serverless functions that execute on the edge, which means the functions run closer to the client or user, rather than on a central server.
+# Table: supabase_function - Query Supabase Functions using SQL
 
-Edge Functions are lightweight and can be used for a variety of purposes, such as serving cached content, transforming or modifying responses, adding security headers, and more. They can be written in JavaScript, TypeScript, or any language that can be transpiled to JavaScript, and can be deployed using Supabase's CLI or API.
+Supabase Functions are user-defined operations that extend the capabilities of a Supabase database. These functions can be used to perform operations that would normally require multiple queries and round trips in a single call. They are stored in the database and can be invoked using the SQL language.
+
+## Table Usage Guide
+
+The `supabase_function` table provides insights into user-defined functions within a Supabase database. As a database administrator or developer, you can explore function-specific details through this table, including the function's name, schema, data type, and source code. Use it to uncover information about functions, such as their implementation, dependencies, and usage, to help optimize database operations and performance.
 
 ## Examples
 
 ### Basic info
+Explore the status and version of various functions within your Supabase environment. This can be useful to keep track of function updates and monitor their operational status.
 
-```sql
+```sql+postgres
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function;
+```
+
+```sql+sqlite
 select
   name,
   slug,
@@ -19,8 +37,21 @@ from
 ```
 
 ### List throttled functions
+Identify instances where certain functions have been throttled or limited in their operations. This can help in diagnosing performance issues and maintaining optimal functionality.
 
-```sql
+```sql+postgres
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function
+where
+  status = 'THROTTLED';
+```
+
+```sql+sqlite
 select
   name,
   slug,
@@ -33,8 +64,21 @@ where
 ```
 
 ### List functions with JWT verification enabled
+Determine the areas in which JWT verification is enabled for various functions. This is useful for ensuring security measures are in place across your functions.
 
-```sql
+```sql+postgres
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function
+where
+  verify_jwt;
+```
+
+```sql+sqlite
 select
   name,
   slug,
@@ -47,8 +91,9 @@ where
 ```
 
 ### List functions not updated in last 30 days
+Discover the functions that have not been updated in the past 30 days. This is useful to identify areas that may require attention or updates to ensure optimal performance and security.
 
-```sql
+```sql+postgres
 select
   name,
   slug,
@@ -61,9 +106,36 @@ where
   updated_at < (current_date - interval '30 days');
 ```
 
-### Get a specific function
+```sql+sqlite
+select
+  name,
+  slug,
+  status,
+  version,
+  project_id
+from
+  supabase_function
+where
+  updated_at < date('now','-30 day');
+```
 
-```sql
+### Get a specific function
+Explore the status and version of a specific function within a given project. This can help in tracking the function's progress and managing updates effectively.
+
+```sql+postgres
+select
+  name,
+  slug,
+  status,
+  version
+from
+  supabase_function
+where
+  project_id = 'pljlooizchwsteampipe'
+  and slug = 'test-function';
+```
+
+```sql+sqlite
 select
   name,
   slug,
