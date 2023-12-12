@@ -2,17 +2,10 @@ package supabase
 
 import (
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/schema"
 )
 
 type supabaseConfig struct {
-	AccessToken *string `cty:"access_token"`
-}
-
-var ConfigSchema = map[string]*schema.Attribute{
-	"access_token": {
-		Type: schema.TypeString,
-	},
+	AccessToken *string `hcl:"access_token"`
 }
 
 func ConfigInstance() interface{} {
