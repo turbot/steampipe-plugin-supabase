@@ -15,7 +15,7 @@ engines: ["steampipe", "sqlite", "postgres", "export"]
 
 [Supabase](https://supabase.com) is an open-source alternative to Firebase, provides a suite of tools and services that help developers build applications with backend functionalities.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 List projects in your Supabase organization:
 
