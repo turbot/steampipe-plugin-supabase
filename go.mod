@@ -7,7 +7,7 @@ toolchain go1.23.2
 require (
 	github.com/deepmap/oapi-codegen v1.12.4
 	github.com/supabase/cli v1.43.0
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.11.6
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.11.7
 )
 
 require (
