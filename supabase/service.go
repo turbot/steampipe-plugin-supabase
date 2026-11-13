@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
 	supabase "github.com/supabase/cli/pkg/api"
